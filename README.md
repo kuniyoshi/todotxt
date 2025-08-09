@@ -20,7 +20,51 @@ This project implements the todo.txt format specification, which allows you to m
 go get todotxt.kuniyoshi.github.com
 ```
 
+Or build from source:
+
+```bash
+git clone https://github.com/kuniyoshi/todotxt
+cd todotxt
+go build -o todo
+```
+
 ## Usage
+
+### Command Line Interface
+
+```bash
+# Add a new task
+./todo add "Buy milk @store"
+./todo add "(A) Call Mom +Family @phone"
+
+# List tasks
+./todo list                  # Show incomplete tasks
+./todo list all              # Show all tasks
+./todo list done             # Show completed tasks
+./todo list +Work            # Filter by project
+./todo list @office          # Filter by context
+
+# Complete a task
+./todo do 1                  # Mark task 1 as complete
+
+# Undo completion
+./todo undo 1                # Mark task 1 as incomplete
+
+# Delete a task
+./todo delete 1              # Remove task 1
+
+# Set priority
+./todo priority 2 B          # Set task 2 to priority B
+
+# Remove priority
+./todo depri 2               # Remove priority from task 2
+
+# Archive completed tasks
+./todo archive               # Move completed tasks to done.txt
+
+# Help
+./todo help                  # Show usage information
+```
 
 ### Basic Format
 
@@ -29,7 +73,8 @@ Each line in your todo.txt file represents a single task:
 ```
 (A) Call Mom @phone +Family
 (B) Schedule annual checkup +Health @hospital due:2025-02-01
-x 2025-01-09 (C) Finish quarterly report +Work @office
+x 2025-01-09 Finish quarterly report +Work @office
+2025-01-08 Buy groceries @store
 ```
 
 ### Priority Levels
@@ -37,14 +82,27 @@ x 2025-01-09 (C) Finish quarterly report +Work @office
 - `(A)` - Highest priority
 - `(B)` - High priority
 - `(C)` - Medium priority
-- And so on...
+- And so on through `(Z)`
 
 ### Special Markers
 
 - `x` - Marks a task as complete
+- `x 2025-01-09` - Completion date
+- `2025-01-08` - Creation date
 - `+` - Project tag (e.g., `+Work`)
 - `@` - Context tag (e.g., `@office`)
-- `due:` - Due date (e.g., `due:2025-01-15`)
+- `key:value` - Custom tags (e.g., `due:2025-01-15`)
+
+### Environment Variables
+
+- `TODO_FILE` - Path to your todo.txt file (default: `~/todo.txt`)
+- `DONE_FILE` - Path to your done.txt archive file (default: `~/done.txt`)
+
+Example:
+```bash
+export TODO_FILE=/path/to/my/tasks.txt
+export DONE_FILE=/path/to/my/completed.txt
+```
 
 ## Development
 
@@ -55,13 +113,28 @@ x 2025-01-09 (C) Finish quarterly report +Work @office
 ### Building
 
 ```bash
-go build
+go build -o todo
 ```
 
-### Running
+### Testing
 
 ```bash
-./todotxt.kuniyoshi.github.com
+go test -v        # Run all tests
+go test -cover    # Run tests with coverage
+```
+
+### Project Structure
+
+```
+todotxt/
+├── main.go           # CLI entry point
+├── todo.go           # Core Todo struct and methods
+├── parser.go         # Todo.txt format parser
+├── file.go           # File I/O operations
+├── commands.go       # CLI command implementations
+├── sort.go           # Sorting and filtering functions
+├── *_test.go         # Test files
+└── README.md         # This file
 ```
 
 ## Todo.txt Format Specification
