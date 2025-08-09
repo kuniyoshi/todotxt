@@ -1,0 +1,43 @@
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Editor/IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries and outputs
+*.test
+*.out
+
+# Build artifacts
+bin/
+build/
+dist/
+
+# Coverage
+coverage/
+coverage.*
+*.cov
+*.coverprofile
+*.lcov
+
+# Environment files (keep example)
+.env
+.env.*
+!.env.example
+
+# Note: do NOT ignore go.sum; it should be committed.
+
