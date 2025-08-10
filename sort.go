@@ -54,7 +54,7 @@ func SortTodos(todos []*Todo, sortBy SortBy) {
 		sort.Slice(todos, func(i, j int) bool {
 			iDue := todos[i].GetDueDate()
 			jDue := todos[j].GetDueDate()
-			
+
 			if iDue == nil && jDue == nil {
 				return todos[i].ID < todos[j].ID
 			}
@@ -93,7 +93,7 @@ func SortTodos(todos []*Todo, sortBy SortBy) {
 func FilterOverdue(todos []*Todo) []*Todo {
 	var results []*Todo
 	now := time.Now()
-	
+
 	for _, todo := range todos {
 		if !todo.Complete {
 			if due := todo.GetDueDate(); due != nil && due.Before(now) {
@@ -101,7 +101,7 @@ func FilterOverdue(todos []*Todo) []*Todo {
 			}
 		}
 	}
-	
+
 	return results
 }
 
@@ -109,7 +109,7 @@ func FilterToday(todos []*Todo) []*Todo {
 	var results []*Todo
 	today := time.Now().Truncate(24 * time.Hour)
 	tomorrow := today.Add(24 * time.Hour)
-	
+
 	for _, todo := range todos {
 		if !todo.Complete {
 			if due := todo.GetDueDate(); due != nil {
@@ -119,7 +119,7 @@ func FilterToday(todos []*Todo) []*Todo {
 			}
 		}
 	}
-	
+
 	return results
 }
 
@@ -127,7 +127,7 @@ func FilterThisWeek(todos []*Todo) []*Todo {
 	var results []*Todo
 	now := time.Now()
 	weekFromNow := now.AddDate(0, 0, 7)
-	
+
 	for _, todo := range todos {
 		if !todo.Complete {
 			if due := todo.GetDueDate(); due != nil {
@@ -137,14 +137,14 @@ func FilterThisWeek(todos []*Todo) []*Todo {
 			}
 		}
 	}
-	
+
 	return results
 }
 
 func GroupByProject(todos []*Todo) map[string][]*Todo {
 	groups := make(map[string][]*Todo)
 	groups["No Project"] = []*Todo{}
-	
+
 	for _, todo := range todos {
 		if len(todo.Projects) == 0 {
 			groups["No Project"] = append(groups["No Project"], todo)
@@ -154,18 +154,18 @@ func GroupByProject(todos []*Todo) map[string][]*Todo {
 			}
 		}
 	}
-	
+
 	if len(groups["No Project"]) == 0 {
 		delete(groups, "No Project")
 	}
-	
+
 	return groups
 }
 
 func GroupByContext(todos []*Todo) map[string][]*Todo {
 	groups := make(map[string][]*Todo)
 	groups["No Context"] = []*Todo{}
-	
+
 	for _, todo := range todos {
 		if len(todo.Contexts) == 0 {
 			groups["No Context"] = append(groups["No Context"], todo)
@@ -175,10 +175,10 @@ func GroupByContext(todos []*Todo) map[string][]*Todo {
 			}
 		}
 	}
-	
+
 	if len(groups["No Context"]) == 0 {
 		delete(groups, "No Context")
 	}
-	
+
 	return groups
 }

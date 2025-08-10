@@ -39,16 +39,16 @@ const (
 )
 
 type Todo struct {
-	ID           int
-	Complete     bool
-	Priority     Priority
-	CreationDate *time.Time
+	ID             int
+	Complete       bool
+	Priority       Priority
+	CreationDate   *time.Time
 	CompletionDate *time.Time
-	Description  string
-	Projects     []string
-	Contexts     []string
-	Tags         map[string]string
-	Raw          string
+	Description    string
+	Projects       []string
+	Contexts       []string
+	Tags           map[string]string
+	Raw            string
 }
 
 func NewTodo(description string) *Todo {
@@ -67,7 +67,7 @@ func NewTodo(description string) *Todo {
 
 func (t *Todo) String() string {
 	var parts []string
-	
+
 	if t.Complete {
 		parts = append(parts, "x")
 		if t.CompletionDate != nil {
@@ -84,31 +84,31 @@ func (t *Todo) String() string {
 			parts = append(parts, t.CreationDate.Format("2006-01-02"))
 		}
 	}
-	
+
 	// Build full description with projects, contexts, and tags
 	fullDesc := t.Description
-	
+
 	for _, project := range t.Projects {
 		if !strings.Contains(fullDesc, "+"+project) {
 			fullDesc += " +" + project
 		}
 	}
-	
+
 	for _, context := range t.Contexts {
 		if !strings.Contains(fullDesc, "@"+context) {
 			fullDesc += " @" + context
 		}
 	}
-	
+
 	for key, value := range t.Tags {
 		tag := fmt.Sprintf("%s:%s", key, value)
 		if !strings.Contains(fullDesc, tag) {
 			fullDesc += " " + tag
 		}
 	}
-	
+
 	parts = append(parts, fullDesc)
-	
+
 	return strings.Join(parts, " ")
 }
 

@@ -13,6 +13,8 @@ This project implements the todo.txt format specification, which allows you to m
 - Project and context tags (+project @context)
 - Due dates and creation dates
 - Completion tracking
+- List all projects and contexts with task counts
+- Archive completed tasks
 
 ## Installation
 
@@ -58,6 +60,12 @@ go build -o todo
 
 # Remove priority
 ./todo depri 2               # Remove priority from task 2
+
+# List projects and contexts
+./todo projects              # List all projects (incomplete tasks only)
+./todo projects all          # List all projects (including completed)
+./todo contexts              # List all contexts (incomplete tasks only)
+./todo contexts all          # List all contexts (including completed)
 
 # Archive completed tasks
 ./todo archive               # Move completed tasks to done.txt

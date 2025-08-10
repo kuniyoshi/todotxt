@@ -132,7 +132,7 @@ func TestParseTodo(t *testing.T) {
 			},
 		},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			todo, err := ParseTodo(tt.input)
@@ -152,28 +152,28 @@ func TestParseTodos(t *testing.T) {
 		"x 2025-01-09 Finish report +Work",
 		"   ",
 	}
-	
+
 	todos, err := ParseTodos(lines)
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
-	
+
 	if len(todos) != 3 {
 		t.Errorf("Expected 3 todos, got %d", len(todos))
 	}
-	
+
 	if todos[0].Priority != PriorityA {
 		t.Error("First todo should have priority A")
 	}
-	
+
 	if todos[0].ID != 1 {
 		t.Error("First todo should have ID 1")
 	}
-	
+
 	if len(todos[1].Contexts) != 1 || todos[1].Contexts[0] != "store" {
 		t.Error("Second todo should have context 'store'")
 	}
-	
+
 	if !todos[2].Complete {
 		t.Error("Third todo should be complete")
 	}
