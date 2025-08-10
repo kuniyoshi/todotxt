@@ -369,8 +369,8 @@ func helpCommand(args []string) error {
 	}
 
 	fmt.Println("╔════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║                    TODO.TXT TASK MANAGER                      ║")
-	fmt.Println("║              Simple and powerful task management              ║")
+	fmt.Println("║                    TODO.TXT TASK MANAGER                       ║")
+	fmt.Println("║              Simple and powerful task management               ║")
 	fmt.Println("╚════════════════════════════════════════════════════════════════╝")
 	fmt.Println()
 	fmt.Println("USAGE:")
