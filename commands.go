@@ -46,9 +46,7 @@ func addCommand(args []string) error {
 	}
 
 	description := strings.Join(args, " ")
-	todo := NewTodo(description)
-
-	todo, _ = ParseTodo(description)
+	todo, _ := ParseTodo(description)
 
 	todoFile.Add(todo)
 

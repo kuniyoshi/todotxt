@@ -89,6 +89,16 @@ lint:
 		echo "golangci-lint not installed. Install with: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"; \
 	fi
 
+# Static analysis (requires staticcheck)
+.PHONY: staticcheck
+staticcheck:
+	@echo "Running staticcheck..."
+	@if command -v staticcheck >/dev/null 2>&1; then \
+		staticcheck ./...; \
+	else \
+		echo "staticcheck not installed. Install with: go install honnef.co/go/tools/cmd/staticcheck@latest"; \
+	fi
+
 # Vet code
 .PHONY: vet
 vet:
@@ -97,7 +107,7 @@ vet:
 
 # Run all quality checks
 .PHONY: check
-check: fmt vet lint test
+check: fmt vet staticcheck lint test
 
 # Clean build artifacts
 .PHONY: clean
@@ -188,6 +198,7 @@ help:
 	@echo "  fmt            Format code"
 	@echo "  tidy           Run go mod tidy"
 	@echo "  lint           Run linter (requires golangci-lint)"
+	@echo "  staticcheck    Run static analysis (requires staticcheck)"
 	@echo "  vet            Run go vet"
 	@echo "  check          Run all quality checks"
 	@echo "  clean          Clean build artifacts"
