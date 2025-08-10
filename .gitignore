@@ -41,3 +41,4 @@ coverage.*
 
 # Note: do NOT ignore go.sum; it should be committed.
 
+.claude/
