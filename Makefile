@@ -18,15 +18,7 @@ GOMOD=$(GOCMD) mod
 GOFMT=$(GOCMD) fmt
 
 # Platform-specific settings
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-    INSTALL_PATH=/usr/local/bin
-endif
-ifeq ($(UNAME_S),Darwin)
-    INSTALL_PATH=/usr/local/bin
-endif
 ifdef WINDOWS
-    INSTALL_PATH=C:\Program Files\todo
     BINARY_NAME=todo.exe
 endif
 
@@ -119,20 +111,6 @@ clean:
 	rm -rf $(DIST_DIR)
 	rm -f coverage.out coverage.html
 
-# Install binary to system path
-.PHONY: install
-install: build
-	@echo "Installing $(BINARY_NAME) to $(INSTALL_PATH)..."
-	@mkdir -p $(INSTALL_PATH)
-	cp $(BINARY_DIR)/$(BINARY_NAME) $(INSTALL_PATH)/
-	@echo "Installation complete. You can now run 'todo' from anywhere."
-
-# Uninstall binary from system path
-.PHONY: uninstall
-uninstall:
-	@echo "Uninstalling $(BINARY_NAME) from $(INSTALL_PATH)..."
-	rm -f $(INSTALL_PATH)/$(BINARY_NAME)
-	@echo "Uninstallation complete."
 
 # Cross-compilation targets
 .PHONY: build-linux
@@ -202,8 +180,6 @@ help:
 	@echo "  vet            Run go vet"
 	@echo "  check          Run all quality checks"
 	@echo "  clean          Clean build artifacts"
-	@echo "  install        Install binary to system path"
-	@echo "  uninstall      Remove binary from system path"
 	@echo "  build-all      Cross-compile for all platforms"
 	@echo "  release        Create release archives"
 	@echo "  dev            Build and run development version"
