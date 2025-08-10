@@ -364,32 +364,270 @@ func contextsCommand(args []string) error {
 }
 
 func helpCommand(args []string) error {
-	fmt.Println("todo.txt - Simple and powerful task management")
+	if len(args) > 0 {
+		return helpForCommand(args[0])
+	}
+
+	fmt.Println("╔════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                    TODO.TXT TASK MANAGER                      ║")
+	fmt.Println("║              Simple and powerful task management              ║")
+	fmt.Println("╚════════════════════════════════════════════════════════════════╝")
 	fmt.Println()
-	fmt.Println("Usage:")
-	fmt.Println("  todo <command> [arguments]")
+	fmt.Println("USAGE:")
+	fmt.Println("  todo [command] [arguments]")
+	fmt.Println("  todo --help               Show this help message")
+	fmt.Println("  todo help <command>       Show help for a specific command")
 	fmt.Println()
-	fmt.Println("Commands:")
-	fmt.Println("  add <task>           Add a new task")
-	fmt.Println("  list [filter]        List tasks (all, done, +project, @context, or search)")
-	fmt.Println("  do <ID>              Mark task as complete")
-	fmt.Println("  undo <ID>            Mark task as incomplete")
-	fmt.Println("  delete <ID>          Delete a task")
-	fmt.Println("  priority <ID> <A-Z>  Set task priority")
-	fmt.Println("  depri <ID>           Remove task priority")
-	fmt.Println("  projects [all]       List all projects")
-	fmt.Println("  contexts [all]       List all contexts")
-	fmt.Println("  archive              Move completed tasks to done.txt")
-	fmt.Println("  help                 Show this help message")
+	fmt.Println("TASK MANAGEMENT:")
+	fmt.Println("  add <task>               Add a new task")
+	fmt.Println("  list, ls [filter]        List tasks (default: incomplete)")
+	fmt.Println("  do, done <ID>            Mark task as complete")
+	fmt.Println("  undo <ID>                Mark task as incomplete")
+	fmt.Println("  delete, rm <ID>          Delete a task")
 	fmt.Println()
-	fmt.Println("Task Format:")
-	fmt.Println("  (A) Task description +project @context due:2025-01-15")
+	fmt.Println("PRIORITY MANAGEMENT:")
+	fmt.Println("  priority, pri <ID> <A-Z> Set task priority (A=highest)")
+	fmt.Println("  depri <ID>               Remove task priority")
 	fmt.Println()
-	fmt.Println("Environment Variables:")
-	fmt.Println("  TODO_FILE            Path to todo.txt file (default: ~/todo.txt)")
-	fmt.Println("  DONE_FILE            Path to done.txt file (default: ~/done.txt)")
+	fmt.Println("ORGANIZATION:")
+	fmt.Println("  projects, proj [all]     List all projects with task counts")
+	fmt.Println("  contexts, ctx [all]      List all contexts with task counts")
+	fmt.Println("  archive                  Move completed tasks to done.txt")
+	fmt.Println()
+	fmt.Println("LIST FILTERS:")
+	fmt.Println("  list                     Show incomplete tasks")
+	fmt.Println("  list all                 Show all tasks")
+	fmt.Println("  list done                Show completed tasks only")
+	fmt.Println("  list +Project            Filter by project")
+	fmt.Println("  list @Context            Filter by context")
+	fmt.Println("  list <search>            Search in task descriptions")
+	fmt.Println()
+	fmt.Println("TASK FORMAT:")
+	fmt.Println("  (A) Task description +project @context key:value")
+	fmt.Println()
+	fmt.Println("  Special markers:")
+	fmt.Println("    (A-Z)        Priority level")
+	fmt.Println("    x            Completed task")
+	fmt.Println("    +project     Project tag")
+	fmt.Println("    @context     Context tag")
+	fmt.Println("    due:date     Due date (format: YYYY-MM-DD)")
+	fmt.Println("    key:value    Custom metadata")
+	fmt.Println()
+	fmt.Println("EXAMPLES:")
+	fmt.Println("  todo add \"(A) Call Mom +Family @phone\"")
+	fmt.Println("  todo add \"Submit report +Work @office due:2025-01-15\"")
+	fmt.Println("  todo list +Work")
+	fmt.Println("  todo do 3")
+	fmt.Println("  todo priority 5 B")
+	fmt.Println()
+	fmt.Println("ENVIRONMENT:")
+	fmt.Println("  TODO_FILE     Path to todo.txt (default: ~/todo.txt)")
+	fmt.Println("  DONE_FILE     Path to done.txt (default: ~/done.txt)")
+	fmt.Println()
+	fmt.Println("For more information on a specific command, run:")
+	fmt.Println("  todo help <command>")
 
 	return nil
+}
+
+func helpForCommand(cmd string) error {
+	helps := map[string]string{
+		"add": `ADD COMMAND - Add a new task
+
+USAGE:
+  todo add <task description>
+
+DESCRIPTION:
+  Adds a new task to your todo.txt file. The task can include priority,
+  projects, contexts, and custom tags.
+
+EXAMPLES:
+  todo add "Buy milk"
+  todo add "(A) Important meeting +Work @office"
+  todo add "Submit report +Work due:2025-01-15"
+  todo add "(B) Call dentist @phone +Health"
+
+TASK FORMAT:
+  - (A-Z)      Priority (A is highest)
+  - +project   Project tag (can have multiple)
+  - @context   Context tag (can have multiple)
+  - key:value  Custom tags (e.g., due:2025-01-15)`,
+
+		"list": `LIST COMMAND - Display tasks
+
+USAGE:
+  todo list [filter]
+  todo ls [filter]
+
+DESCRIPTION:
+  Lists tasks from your todo.txt file. By default shows incomplete tasks.
+
+FILTERS:
+  (none)       Show incomplete tasks
+  all          Show all tasks
+  done         Show completed tasks only
+  +Project     Filter by project
+  @Context     Filter by context
+  <search>     Search in descriptions
+
+EXAMPLES:
+  todo list                 # Show incomplete tasks
+  todo list all            # Show all tasks
+  todo list done           # Show completed tasks
+  todo list +Work          # Show tasks in Work project
+  todo list @home          # Show tasks in home context
+  todo list "report"       # Search for "report"`,
+
+		"do": `DO/DONE COMMAND - Mark task as complete
+
+USAGE:
+  todo do <ID>
+  todo done <ID>
+  todo complete <ID>
+
+DESCRIPTION:
+  Marks a task as complete. This adds an 'x' marker and completion date
+  to the task, and removes any priority.
+
+EXAMPLES:
+  todo do 3
+  todo done 1
+  todo complete 5`,
+
+		"priority": `PRIORITY COMMAND - Set task priority
+
+USAGE:
+  todo priority <ID> <A-Z>
+  todo pri <ID> <A-Z>
+
+DESCRIPTION:
+  Sets or changes the priority of a task. Priority ranges from A (highest)
+  to Z (lowest). Completed tasks cannot have priorities.
+
+EXAMPLES:
+  todo priority 3 A        # Set highest priority
+  todo pri 5 C            # Set medium priority
+  todo priority 2 Z       # Set lowest priority`,
+
+		"projects": `PROJECTS COMMAND - List all projects
+
+USAGE:
+  todo projects [all]
+  todo proj [all]
+
+DESCRIPTION:
+  Lists all unique projects found in tasks, along with the count of
+  tasks in each project. By default shows projects from incomplete
+  tasks only.
+
+OPTIONS:
+  all          Include completed tasks in counts
+
+EXAMPLES:
+  todo projects            # Projects from incomplete tasks
+  todo projects all        # Projects from all tasks`,
+
+		"contexts": `CONTEXTS COMMAND - List all contexts
+
+USAGE:
+  todo contexts [all]
+  todo ctx [all]
+
+DESCRIPTION:
+  Lists all unique contexts found in tasks, along with the count of
+  tasks in each context. By default shows contexts from incomplete
+  tasks only.
+
+OPTIONS:
+  all          Include completed tasks in counts
+
+EXAMPLES:
+  todo contexts            # Contexts from incomplete tasks
+  todo contexts all        # Contexts from all tasks`,
+
+		"archive": `ARCHIVE COMMAND - Archive completed tasks
+
+USAGE:
+  todo archive
+
+DESCRIPTION:
+  Moves all completed tasks from todo.txt to done.txt. This helps keep
+  your active todo list clean and focused on current tasks.
+
+NOTES:
+  - Completed tasks are appended to done.txt
+  - Original completion dates are preserved
+  - Tasks are removed from todo.txt after archiving
+
+EXAMPLE:
+  todo archive`,
+
+		"delete": `DELETE COMMAND - Remove a task
+
+USAGE:
+  todo delete <ID>
+  todo rm <ID>
+  todo del <ID>
+
+DESCRIPTION:
+  Permanently removes a task from your todo.txt file. This action
+  cannot be undone.
+
+EXAMPLES:
+  todo delete 3
+  todo rm 5
+  todo del 1`,
+
+		"undo": `UNDO COMMAND - Mark task as incomplete
+
+USAGE:
+  todo undo <ID>
+  todo undone <ID>
+
+DESCRIPTION:
+  Marks a completed task as incomplete again. This removes the 'x'
+  marker and completion date from the task.
+
+EXAMPLES:
+  todo undo 3
+  todo undone 5`,
+
+		"depri": `DEPRI COMMAND - Remove task priority
+
+USAGE:
+  todo depri <ID>
+
+DESCRIPTION:
+  Removes the priority from a task. The task will no longer have
+  a priority marker (A-Z).
+
+EXAMPLES:
+  todo depri 3
+  todo depri 1`,
+	}
+
+	// Check for command aliases
+	aliases := map[string]string{
+		"ls":       "list",
+		"done":     "do",
+		"complete": "do",
+		"rm":       "delete",
+		"del":      "delete",
+		"pri":      "priority",
+		"proj":     "projects",
+		"ctx":      "contexts",
+	}
+
+	if alias, ok := aliases[cmd]; ok {
+		cmd = alias
+	}
+
+	if help, ok := helps[cmd]; ok {
+		fmt.Println(help)
+		return nil
+	}
+
+	return fmt.Errorf("no help available for command: %s", cmd)
 }
 
 func executeCommand(name string, args []string) error {
@@ -424,6 +662,13 @@ func executeCommand(name string, args []string) error {
 }
 
 func parseArgs() (string, []string) {
+	// Check for --help or -h before parsing flags
+	for _, arg := range os.Args[1:] {
+		if arg == "--help" || arg == "-h" || arg == "-help" {
+			return "help", []string{}
+		}
+	}
+
 	flag.Parse()
 	args := flag.Args()
 
