@@ -372,9 +372,9 @@ func helpCommand(args []string) error {
 	fmt.Println("╚════════════════════════════════════════════════════════════════╝")
 	fmt.Println()
 	fmt.Println("USAGE:")
-	fmt.Println("  todo [command] [arguments]")
-	fmt.Println("  todo --help               Show this help message")
-	fmt.Println("  todo help <command>       Show help for a specific command")
+	fmt.Println("  todotxt [command] [arguments]")
+	fmt.Println("  todotxt --help               Show this help message")
+	fmt.Println("  todotxt help <command>       Show help for a specific command")
 	fmt.Println()
 	fmt.Println("TASK MANAGEMENT:")
 	fmt.Println("  add <task>               Add a new task")
@@ -412,18 +412,18 @@ func helpCommand(args []string) error {
 	fmt.Println("    key:value    Custom metadata")
 	fmt.Println()
 	fmt.Println("EXAMPLES:")
-	fmt.Println("  todo add \"(A) Call Mom +Family @phone\"")
-	fmt.Println("  todo add \"Submit report +Work @office due:2025-01-15\"")
-	fmt.Println("  todo list +Work")
-	fmt.Println("  todo do 3")
-	fmt.Println("  todo priority 5 B")
+	fmt.Println("  todotxt add \"(A) Call Mom +Family @phone\"")
+	fmt.Println("  todotxt add \"Submit report +Work @office due:2025-01-15\"")
+	fmt.Println("  todotxt list +Work")
+	fmt.Println("  todotxt do 3")
+	fmt.Println("  todotxt priority 5 B")
 	fmt.Println()
 	fmt.Println("ENVIRONMENT:")
 	fmt.Println("  TODO_FILE     Path to todo.txt (default: ~/todo.txt)")
 	fmt.Println("  DONE_FILE     Path to done.txt (default: ~/done.txt)")
 	fmt.Println()
 	fmt.Println("For more information on a specific command, run:")
-	fmt.Println("  todo help <command>")
+	fmt.Println("  todotxt help <command>")
 
 	return nil
 }
@@ -433,17 +433,17 @@ func helpForCommand(cmd string) error {
 		"add": `ADD COMMAND - Add a new task
 
 USAGE:
-  todo add <task description>
+  todotxt add <task description>
 
 DESCRIPTION:
   Adds a new task to your todo.txt file. The task can include priority,
   projects, contexts, and custom tags.
 
 EXAMPLES:
-  todo add "Buy milk"
-  todo add "(A) Important meeting +Work @office"
-  todo add "Submit report +Work due:2025-01-15"
-  todo add "(B) Call dentist @phone +Health"
+  todotxt add "Buy milk"
+  todotxt add "(A) Important meeting +Work @office"
+  todotxt add "Submit report +Work due:2025-01-15"
+  todotxt add "(B) Call dentist @phone +Health"
 
 TASK FORMAT:
   - (A-Z)      Priority (A is highest)
@@ -454,8 +454,8 @@ TASK FORMAT:
 		"list": `LIST COMMAND - Display tasks
 
 USAGE:
-  todo list [filter]
-  todo ls [filter]
+  todotxt list [filter]
+  todotxt ls [filter]
 
 DESCRIPTION:
   Lists tasks from your todo.txt file. By default shows incomplete tasks.
@@ -469,49 +469,49 @@ FILTERS:
   <search>     Search in descriptions
 
 EXAMPLES:
-  todo list                 # Show incomplete tasks
-  todo list all            # Show all tasks
-  todo list done           # Show completed tasks
-  todo list +Work          # Show tasks in Work project
-  todo list @home          # Show tasks in home context
-  todo list "report"       # Search for "report"`,
+  todotxt list                 # Show incomplete tasks
+  todotxt list all            # Show all tasks
+  todotxt list done           # Show completed tasks
+  todotxt list +Work          # Show tasks in Work project
+  todotxt list @home          # Show tasks in home context
+  todotxt list "report"       # Search for "report"`,
 
 		"do": `DO/DONE COMMAND - Mark task as complete
 
 USAGE:
-  todo do <ID>
-  todo done <ID>
-  todo complete <ID>
+  todotxt do <ID>
+  todotxt done <ID>
+  todotxt complete <ID>
 
 DESCRIPTION:
   Marks a task as complete. This adds an 'x' marker and completion date
   to the task, and removes any priority.
 
 EXAMPLES:
-  todo do 3
-  todo done 1
-  todo complete 5`,
+  todotxt do 3
+  todotxt done 1
+  todotxt complete 5`,
 
 		"priority": `PRIORITY COMMAND - Set task priority
 
 USAGE:
-  todo priority <ID> <A-Z>
-  todo pri <ID> <A-Z>
+  todotxt priority <ID> <A-Z>
+  todotxt pri <ID> <A-Z>
 
 DESCRIPTION:
   Sets or changes the priority of a task. Priority ranges from A (highest)
   to Z (lowest). Completed tasks cannot have priorities.
 
 EXAMPLES:
-  todo priority 3 A        # Set highest priority
-  todo pri 5 C            # Set medium priority
-  todo priority 2 Z       # Set lowest priority`,
+  todotxt priority 3 A        # Set highest priority
+  todotxt pri 5 C            # Set medium priority
+  todotxt priority 2 Z       # Set lowest priority`,
 
 		"projects": `PROJECTS COMMAND - List all projects
 
 USAGE:
-  todo projects [all]
-  todo proj [all]
+  todotxt projects [all]
+  todotxt proj [all]
 
 DESCRIPTION:
   Lists all unique projects found in tasks, along with the count of
@@ -522,14 +522,14 @@ OPTIONS:
   all          Include completed tasks in counts
 
 EXAMPLES:
-  todo projects            # Projects from incomplete tasks
-  todo projects all        # Projects from all tasks`,
+  todotxt projects            # Projects from incomplete tasks
+  todotxt projects all        # Projects from all tasks`,
 
 		"contexts": `CONTEXTS COMMAND - List all contexts
 
 USAGE:
-  todo contexts [all]
-  todo ctx [all]
+  todotxt contexts [all]
+  todotxt ctx [all]
 
 DESCRIPTION:
   Lists all unique contexts found in tasks, along with the count of
@@ -540,13 +540,13 @@ OPTIONS:
   all          Include completed tasks in counts
 
 EXAMPLES:
-  todo contexts            # Contexts from incomplete tasks
-  todo contexts all        # Contexts from all tasks`,
+  todotxt contexts            # Contexts from incomplete tasks
+  todotxt contexts all        # Contexts from all tasks`,
 
 		"archive": `ARCHIVE COMMAND - Archive completed tasks
 
 USAGE:
-  todo archive
+  todotxt archive
 
 DESCRIPTION:
   Moves all completed tasks from todo.txt to done.txt. This helps keep
@@ -558,50 +558,50 @@ NOTES:
   - Tasks are removed from todo.txt after archiving
 
 EXAMPLE:
-  todo archive`,
+  todotxt archive`,
 
 		"delete": `DELETE COMMAND - Remove a task
 
 USAGE:
-  todo delete <ID>
-  todo rm <ID>
-  todo del <ID>
+  todotxt delete <ID>
+  todotxt rm <ID>
+  todotxt del <ID>
 
 DESCRIPTION:
   Permanently removes a task from your todo.txt file. This action
   cannot be undone.
 
 EXAMPLES:
-  todo delete 3
-  todo rm 5
-  todo del 1`,
+  todotxt delete 3
+  todotxt rm 5
+  todotxt del 1`,
 
 		"undo": `UNDO COMMAND - Mark task as incomplete
 
 USAGE:
-  todo undo <ID>
-  todo undone <ID>
+  todotxt undo <ID>
+  todotxt undone <ID>
 
 DESCRIPTION:
   Marks a completed task as incomplete again. This removes the 'x'
   marker and completion date from the task.
 
 EXAMPLES:
-  todo undo 3
-  todo undone 5`,
+  todotxt undo 3
+  todotxt undone 5`,
 
 		"depri": `DEPRI COMMAND - Remove task priority
 
 USAGE:
-  todo depri <ID>
+  todotxt depri <ID>
 
 DESCRIPTION:
   Removes the priority from a task. The task will no longer have
   a priority marker (A-Z).
 
 EXAMPLES:
-  todo depri 3
-  todo depri 1`,
+  todotxt depri 3
+  todotxt depri 1`,
 	}
 
 	// Check for command aliases

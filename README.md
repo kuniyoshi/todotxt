@@ -29,7 +29,7 @@ go install github.com/kuniyoshi/todotxt@latest
 ```bash
 git clone https://github.com/kuniyoshi/todotxt
 cd todotxt
-go build -o todo
+go build -o todotxt
 ```
 
 ## Usage
@@ -38,42 +38,42 @@ go build -o todo
 
 ```bash
 # Add a new task
-./todo add "Buy milk @store"
-./todo add "(A) Call Mom +Family @phone"
+todotxt add "Buy milk @store"
+todotxt add "(A) Call Mom +Family @phone"
 
 # List tasks
-./todo list                  # Show incomplete tasks
-./todo list all              # Show all tasks
-./todo list done             # Show completed tasks
-./todo list +Work            # Filter by project
-./todo list @office          # Filter by context
+todotxt list                  # Show incomplete tasks
+todotxt list all              # Show all tasks
+todotxt list done             # Show completed tasks
+todotxt list +Work            # Filter by project
+todotxt list @office          # Filter by context
 
 # Complete a task
-./todo do 1                  # Mark task 1 as complete
+todotxt do 1                  # Mark task 1 as complete
 
 # Undo completion
-./todo undo 1                # Mark task 1 as incomplete
+todotxt undo 1                # Mark task 1 as incomplete
 
 # Delete a task
-./todo delete 1              # Remove task 1
+todotxt delete 1              # Remove task 1
 
 # Set priority
-./todo priority 2 B          # Set task 2 to priority B
+todotxt priority 2 B          # Set task 2 to priority B
 
 # Remove priority
-./todo depri 2               # Remove priority from task 2
+todotxt depri 2               # Remove priority from task 2
 
 # List projects and contexts
-./todo projects              # List all projects (incomplete tasks only)
-./todo projects all          # List all projects (including completed)
-./todo contexts              # List all contexts (incomplete tasks only)
-./todo contexts all          # List all contexts (including completed)
+todotxt projects              # List all projects (incomplete tasks only)
+todotxt projects all          # List all projects (including completed)
+todotxt contexts              # List all contexts (incomplete tasks only)
+todotxt contexts all          # List all contexts (including completed)
 
 # Archive completed tasks
-./todo archive               # Move completed tasks to done.txt
+todotxt archive               # Move completed tasks to done.txt
 
 # Help
-./todo help                  # Show usage information
+todotxt help                  # Show usage information
 ```
 
 ### Basic Format
@@ -123,7 +123,7 @@ export DONE_FILE=/path/to/my/completed.txt
 ### Building
 
 ```bash
-go build -o todo
+go build -o todotxt
 ```
 
 ### Testing

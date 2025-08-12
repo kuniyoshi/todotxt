@@ -2,7 +2,7 @@
 # Makefile for building, testing, and installing
 
 # Variables
-BINARY_NAME=todo
+BINARY_NAME=todotxt
 BINARY_DIR=bin
 DIST_DIR=dist
 VERSION?=v1.0.0
@@ -19,7 +19,7 @@ GOFMT=$(GOCMD) fmt
 
 # Platform-specific settings
 ifdef WINDOWS
-    BINARY_NAME=todo.exe
+    BINARY_NAME=todotxt.exe
 endif
 
 # Default target

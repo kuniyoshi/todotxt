@@ -12,7 +12,7 @@ func main() {
 
 	if err := executeCommand(command, args); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		fmt.Fprintln(os.Stderr, "Run 'todo help' for usage information.")
+		fmt.Fprintln(os.Stderr, "Run 'todotxt help' for usage information.")
 		os.Exit(1)
 	}
 }
