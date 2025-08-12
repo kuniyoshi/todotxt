@@ -21,13 +21,7 @@ This project implements the todo.txt format specification, which allows you to m
 ### Using go install
 
 ```bash
-go install todotxt.kuniyoshi.github.com@latest
-```
-
-### Using go get
-
-```bash
-go get todotxt.kuniyoshi.github.com
+go install github.com/kuniyoshi/todotxt@latest
 ```
 
 ### Build from source
